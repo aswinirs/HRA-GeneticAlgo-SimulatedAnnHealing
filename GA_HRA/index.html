@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GA-HRA</title>
+  <script src="../plotly-latest.min.js"></script>
+  <script src="../p5.min.js"></script>
+  <script src='../p5.js'></script>
+  <script src="HRASourceCode.js"></script>
+  <script src="HRAFitnessGraph.js"></script>
+
+  <style>
+  body{background-color: powderwhite; font-size: 18px}
+
+  header, footer {
+    padding: 1em;
+    color: white;
+    background-color: black;
+    clear: left;
+    text-align: center;
+  }
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 3px 1.5px;
+    cursor: pointer;
+}
+.button:active {
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.button2 {background-color: #008CBA;} /* Blue */
+.button3 {background-color: #f44336;} /* Red */
+.button4 {background-color: #555555;} /* Black */
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+</style>
+</head>
+<body>
+  <header>
+   <h3>Human Resource Allocation Using Genetic Algorithm (GA)</h3>
+  </header>
+  <br>
+  <span>Time Taken to find first solution(in mins):</span>
+  <output id="timeTaken"></output>
+  <center>
+    <div>
+      <button class="button button4" type="button" id="trainingSample" onclick="loadTrainingSample()">Fetch Developer Details and Project Details </button>
+      <output style = "color:green" id="fileUploaded">Done!!</output>
+      <br/><br/>
+      <span>MaxGen(G)</span>
+      <input type="number" id="maxGenIn" value="600" step="100" min = "1000" max="10000">
+      <output id="maxGenOut"></output>
+
+      <span>PopSize(N)</span>
+      <input type="number" id="popSizeIn" value="200" step="50" min = "50" max="1000">
+      <output id="popSizeOut"></output>
+
+      <span>Crossover Rate</span>
+      <input type="number" id="pCrossOverIn" value="0.5" step = "0.1" min = "0" max ="1">
+      <output id="pCrossOverOut"></output>
+
+      <span>Mutation Rate</span>
+      <input type="number" id="pMutateIn" value = "0.5" min = "0" max="1" step= "0.1">
+      <output id="pMutateOut"></output>
+
+      <br><br>
+      <span>Start Processing</span>
+      <input class="button" type="submit" id="pStartbutton" value="Start" onclick="start_fn()">
+
+      <span>Stop Processing</span>
+      <input class="button button3" type="submit" id="pStopbutton" value="Stop" onclick="stop_fn()">
+      </div>
+     <div>
+      <br><br>
+    <table id="myTable">
+      <tr>
+        <td></td>
+        <td>Current Generation(Last Candidate)</td>
+        <td>Best Ever Generation</td>
+      </tr>
+      <tr>
+        <td>Generation Number</td>
+        <td><output id="Generation"></output></td>
+        <td><output id="bEGeneration"></output></td>
+      </tr>
+      <tr>
+        <td>Candidate Id</td>
+        <td><output id="Candidate"></output></td>
+        <td><output id="bECandidate"></output></td>
+      </tr>
+        <tr>
+        <td>Project Duration Fitness(Time Saved)</td>
+        <td><output id="fitnessProjectDuration"></output></td>
+        <td><output id="bEProjectDuration"></output></td>
+      </tr>
+        <tr>
+        <td>Is Duration Fitness Valid</td>
+        <td><output id="taskEffortvalid"></output></td>
+        <td><output id="bEEffortvalid"></output></td>
+      </tr>
+      <tr>
+        <td>Project Cost Fitness(Profit)</td>
+        <td><output id="fitnessprojectCost"></output></td>
+        <td><output id="bEprojectCost"></output></td>
+      </tr>
+        <tr>
+        <td>Is Cost Fitness Valid</td>
+        <td><output id="taskCostvalid"></output></td>
+        <td><output id="bECostvalid"></output></td>
+      </tr>
+        <tr>
+        <td>Project Dev Allocation Fitness</td>
+        <td><output id="fitnessDevAllocation"></output></td>
+        <td><output id="bEDevAllocation"></output></td>
+      </tr>
+        <tr>
+        <td>Is Dev Allocation Fitness Valid</td>
+        <td><output id="taskDevAllocValid"></output></td>
+        <td><output id="bEDevAllocValid"></output></td>
+      </tr>
+        <tr>
+        <td>Total Fitness</td>
+        <td><output id="fitness"></output></td>
+        <td><output id="bEfitness"></output></td>
+      </tr>
+
+    </table>
+    <br><br>
+          <output id = "note"><b>Graph 1</b> <br> Last candidate's fitness values (Duration, Cost, Developer allocation and Total fitness) for every generation.</output>
+        </div>
+    <div id="chartcontainer1" style="overflow: scroll border:1px solid                                                         #d3d3d3"></div>
+    <br>
+    <output id = "note"><b>Graph 2</b> <br><br> Solution Convergence Graph - Best fitness and Reference candidate total fitness. <br><br>After best solution is reached, good solutions take over population (mu, lambda elitism).Very soon our 200th reference candidate will also have one of good possible solution.</output>
+    <div id="chartcontainer2" style="overflow: scroll border:1px solid                                                         #d3d3d3"></div>
+  </body>
+</html>
+

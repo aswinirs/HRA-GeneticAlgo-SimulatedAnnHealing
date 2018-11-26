@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SA-HRA</title>
+  <script src="../plotly-latest.min.js"></script>
+  <script src="../p5.min.js"></script>
+  <script src="SA_HRA_SolnGraph.js"></script>
+  <script src="SimulatedAnnhealing.js"></script>
+
+  <style>
+  body{background-color: powderwhite; font-size: 18px}
+
+  header, footer {
+    padding: 1em;
+    color: white;
+    background-color: black;
+    clear: left;
+    text-align: center;
+  }
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 3px 1.5px;
+    cursor: pointer;
+}
+.button:active {
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.button2 {background-color: #008CBA;} /* Blue */
+.button3 {background-color: #f44336;} /* Red */
+.button4 {background-color: #555555;} /* Black */
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+</style>
+</head>
+<body>
+  <header>
+   <h3>Human Resource Allocation Using Simulated Annhealing (SA)</h3>
+  </header>
+  <br>
+  <span>Time Taken to find first solution(in mins):</span>
+  <output id="timeTaken"></output>
+  <center>
+    <div>
+      <button class="button button4" type="button" id="trainingSample" onclick="loadTrainingSample()">Fetch Developer Details and Project Details </button>
+      <left><output style = "color:green" id="fileUploaded">Done!!</output><br><br>
+      <br/><br/>
+      <span>Temperature</span>
+      <input type="number" id="maxGenIn" value="3200" step="50" min = "100" max="1000">
+      <output id="maxGenOut"></output>
+
+      <span>Alpha</span>
+      <input type="number" id="popSizeIn" value="0.99999" step="0.001" min = "0.1" max="0.999">
+      <output id="popSizeOut"></output>
+
+      <span>Epsilon</span>
+      <input type="number" id="pCrossOverIn" value="0.001" step = "0.01" min = "0" max ="1">
+      <output id="pCrossOverOut"></output>
+
+
+      <br><br>
+      <span>Start Processing</span>
+      <input class="button" type="submit" id="pStartbutton" value="Start" onclick="start_fn()">
+
+      <span>Stop Processing</span>
+      <input class="button button3" type="submit" id="pStopbutton" value="Stop" onclick="stop_fn()">
+      </div>
+     <div>
+      <br><br>
+    <table id="myTable">
+      <tr>
+        <td></td>
+        <td>Current Iteration</td>
+        <td>Good Solution</td>
+      </tr>
+      <tr>
+        <td>Temperature</td>
+        <td><output id="Generation"></output></td>
+        <td><output id="bEGeneration"></output></td>
+      </tr>
+      <tr>
+        <td>Iteration Number</td>
+        <td><output id="Candidate"></output></td>
+        <td><output id="bECandidate"></output></td>
+      </tr>
+        <tr>
+        <td>Project Duration Fitness(Time Saved)</td>
+        <td><output id="fitnessProjectDuration"></output></td>
+        <td><output id="bEProjectDuration"></output></td>
+      </tr>
+        <tr>
+        <td>Is Duration Fitness Valid</td>
+        <td><output id="taskEffortvalid"></output></td>
+        <td><output id="bEEffortvalid"></output></td>
+      </tr>
+      <tr>
+        <td>Project Cost Fitness(Profit)</td>
+        <td><output id="fitnessprojectCost"></output></td>
+        <td><output id="bEprojectCost"></output></td>
+      </tr>
+        <tr>
+        <td>Is Cost Fitness Valid</td>
+        <td><output id="taskCostvalid"></output></td>
+        <td><output id="bECostvalid"></output></td>
+      </tr>
+        <tr>
+        <td>Project Dev Allocation Fitness(</td>
+        <td><output id="fitnessDevAllocation"></output></td>
+        <td><output id="bEDevAllocation"></output></td>
+      </tr>
+        <tr>
+        <td>Is Dev Allocation Fitness Valid</td>
+        <td><output id="taskDevAllocValid"></output></td>
+        <td><output id="bEDevAllocValid"></output></td>
+      </tr>
+        <tr>
+        <td>Total Fitness</td>
+        <td><output id="fitness"></output></td>
+        <td><output id="bEfitness"></output></td>
+      </tr>
+
+    </table>
+    <br><br>
+          <output id = "note"><b>Graph 1</b> <br><br> Good Solution(if any) and every 400th Iteration Duration, Cost, Developer allocation and Total fitness values</output>
+        </div>
+    <div id="chartcontainer1" style="overflow: scroll border:1px solid #d3d3d3"></div>
+  </body>
+</html>
+

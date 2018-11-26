@@ -1,0 +1,1 @@
+Analysis, 400, 0, 400, 0Design, 320, 400, 720, 1Design, 240, 400, 640, 1Design, 240, 400, 640, 1Implementation, 240, 720, 960, 2Implementation, 600, 640, 1240, 3Implementation, 160, 640, 800, 4Test, 100, 960, 1060, 5Test, 80, 1240, 1320, 6Test, 70, 800, 870, 7Test, 80, 1320, 1400, 8, 9, 10
